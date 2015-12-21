@@ -1,3 +1,5 @@
+console.log("just rdy");
+
 function getJsonFromUrl(url) {
   var query = url;
   var result = {};
@@ -40,31 +42,24 @@ function getBaseURL(url){
   return link;
 }
 
-chrome.webRequest.onBeforeSendHeaders.addListener(
+chrome.webRequest.onBeforeRequest.addListener(
         function(details) {
+          console.log(details);
           if ( details.url.indexOf("collect") != -1 ){
               var link = getBaseURL(details.url);
               var query = getQuery(details.url);
               var queryJSON = getJsonFromUrl(query);
               
-              console.log(query);
-              console.log(queryJSON);
-
-              queryJSON["dl"] = "https%3A%2F%2Fwarm-harbor-7429.herokuapp.com%2Ftestpage";
+              queryJSON["dl"] = "https%3A%2F%2Fwarm-harbor-7429.herokuapp.com%2FtestpageTEST3";
               queryJSON["sr"] = "1000x1000";
               query = getQueryFromJSON(queryJSON);
 
-              console.log(query);
-
               link += query;
-
-              details.url = link;
-              
+         
           }
-          return {cancel: false};
-          //return {cancel: details.url.indexOf("collect") != -1};
+          return {redirectUrl: link};;
         },
         {urls: getListOfPixels()},
-        ["blocking"]); 
+        ["blocking", "requestBody"]); 
 
 
