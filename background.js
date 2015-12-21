@@ -42,6 +42,13 @@ function getBaseURL(url){
   return link;
 }
 
+function encryptParams(json){
+  json["dl"] = "https%3A%2F%2Fwarm-harbor-7429.herokuapp.com%2FtestpageTEST4";
+  json["sr"] = "1000x1000";
+
+  return json;
+}
+
 chrome.webRequest.onBeforeRequest.addListener(
         function(details) {
           console.log(details);
@@ -50,9 +57,8 @@ chrome.webRequest.onBeforeRequest.addListener(
               var query = getQuery(details.url);
               var queryJSON = getJsonFromUrl(query);
               
-              queryJSON["dl"] = "https%3A%2F%2Fwarm-harbor-7429.herokuapp.com%2FtestpageTEST3";
-              queryJSON["sr"] = "1000x1000";
-              query = getQueryFromJSON(queryJSON);
+              encryptedData = encryptParams(queryJSON);    
+              query = getQueryFromJSON(encryptedData);
 
               link += query;
          
