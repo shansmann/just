@@ -1,0 +1,12 @@
+{
+  "name": "TrackBlock",
+  "version": "1.0",
+  "description": "naise",
+  "permissions": ["webRequest", "webRequestBlocking", "http://localhost:1337/*", "https://www.google-analytics.com/r/collect", "http://*/*",
+    "https://*/*"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "manifest_version": 2
+}
